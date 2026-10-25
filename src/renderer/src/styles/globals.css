@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Palette, raggi, ombre e font: tutto qui. La variante scura sovrascrive gli stessi token in .dark */
+@theme {
+  --color-*: initial;
+
+  --color-background: #faf9f5;
+  --color-chrome: #f1efe8;
+  --color-toolbar: #f5f4ee;
+  --color-surface: #fdfcfa;
+  --color-foreground: #2b2a27;
+  --color-muted-foreground: #78756d;
+  --color-border: #e5e2d9;
+  --color-input: #dfdbd0;
+  --color-hover: rgb(43 42 39 / 0.045);
+  --color-active: rgb(43 42 39 / 0.08);
+  --color-accent: #b9694e;
+  --color-accent-hover: #ab5f45;
+  --color-accent-foreground: #fffaf5;
+  --color-ring: rgb(185 105 78 / 0.45);
+  --color-destructive: #b04a3c;
+  --color-destructive-foreground: #fffaf5;
+  --color-overlay: rgb(43 42 39 / 0.22);
+  --color-transparent: transparent;
+  --color-white: #ffffff;
+
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-full: 9999px;
+
+  --shadow-float: 0 12px 32px -16px rgb(43 42 39 / 0.22), 0 1px 2px rgb(43 42 39 / 0.04);
+
+  /* "Segoe UI Variable" (Windows 11) has a true 500 weight; plain Segoe UI jumps to semibold */
+  --font-sans: ui-sans-serif, -apple-system, "Segoe UI Variable Text", "Segoe UI", Inter, system-ui, sans-serif;
+
+  --default-transition-duration: 140ms;
+  --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --animate-indeterminate: indeterminate 1.1s ease-in-out infinite;
+
+  @keyframes indeterminate {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(250%);
+    }
+  }
+}
+
+.dark {
+  --color-background: #262624;
+  --color-chrome: #1e1e1c;
+  --color-toolbar: #222220;
+  --color-surface: #2d2c29;
+  --color-foreground: #ebe8e0;
+  --color-muted-foreground: #a09d94;
+  --color-border: #393834;
+  --color-input: #45433e;
+  --color-hover: rgb(255 248 235 / 0.05);
+  --color-active: rgb(255 248 235 / 0.09);
+  --color-accent: #cc7d61;
+  --color-accent-hover: #d78b70;
+  --color-accent-foreground: #241a15;
+  --color-ring: rgb(204 125 97 / 0.5);
+  --color-destructive: #c9604f;
+  --color-destructive-foreground: #1f1715;
+  --color-overlay: rgb(0 0 0 / 0.4);
+  --shadow-float: 0 12px 32px -16px rgb(0 0 0 / 0.55), 0 1px 2px rgb(0 0 0 / 0.2);
+  color-scheme: dark;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-size: 14px;
+    font-weight: 400;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  input,
+  textarea {
+    user-select: text;
+  }
+
+  :focus-visible {
+    outline: none;
+  }
+}
+
+/* The tab bar doubles as the window title bar: its empty space drags the window
+   (double-click maximises), while anything clickable inside it stays interactive. */
+@layer components {
+  .titlebar {
+    -webkit-app-region: drag;
+  }
+
+  .titlebar :is(button, [role="tab"], a, input) {
+    -webkit-app-region: no-drag;
+  }
+}

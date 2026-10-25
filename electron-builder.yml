@@ -1,0 +1,35 @@
+appId: it.danilo.multisession
+productName: MultiSession
+directories:
+  buildResources: build
+  output: dist
+files:
+  - out/main/**
+  - out/preload/**
+  - out/renderer/**
+  - package.json
+# The MCP bridge stays outside the asar so plain Node can run it:
+# <cartella di installazione>/resources/mcp/bridge.mjs
+extraResources:
+  - from: out/mcp
+    to: mcp
+asar: true
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+# Installs like a regular app: per user, no admin prompt, shortcuts on desktop and Start.
+nsis:
+  oneClick: true
+  perMachine: false
+  createDesktopShortcut: always
+  createStartMenuShortcut: true
+  shortcutName: MultiSession
+  runAfterFinish: true
+  deleteAppDataOnUninstall: false
+mac:
+  target: dmg
+  category: public.app-category.productivity
+linux:
+  target: AppImage
+  category: Network
